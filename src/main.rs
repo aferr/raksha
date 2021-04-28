@@ -24,5 +24,6 @@ fn test_emit_souffle(filename: String) {
 }
 
 fn main() {
+    test_cons_ast(String::from("test_inputs/input_file"));
     test_emit_souffle(String::from("test_inputs/input_file"));
 }
