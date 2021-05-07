@@ -24,7 +24,7 @@ fn test_emit_souffle(filename: &String) {
     let source = fs::read_to_string(filename)
         .expect("Something went wrong reading the file");
     let prog = astconstructionvisitor::parse_program(&source[..]);
-    let dlir_prog = prog_to_dlir(&prog);
+    let dlir_prog = LoweringToDatalogPass::lower(&prog);
     let souffle_code = SouffleEmitter::emit_program(&dlir_prog);
     println!("souffle code from {}, \n{}", &filename, souffle_code);
 }
@@ -33,7 +33,7 @@ fn test_input_to_souffle(filename: &String) {
     let source = fs::read_to_string("test_inputs/".to_owned() + filename)
         .expect("Something went wrong reading the file");
     let prog = astconstructionvisitor::parse_program(&source[..]);
-    let dlir_prog = prog_to_dlir(&prog);
+    let dlir_prog = LoweringToDatalogPass::lower(&prog);
     let souffle_code = SouffleEmitter::emit_program(&dlir_prog);
     fs::write("test_outputs/".to_owned() + filename + ".dl", souffle_code)
         .expect("failed to write output to file");
