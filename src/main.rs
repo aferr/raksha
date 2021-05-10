@@ -40,16 +40,9 @@ fn test_input_to_souffle(filename: &String) {
 }
 
 fn main() {
-    for test in ["test1", "test2", "test3"] {
-    // for test in ["test2"] {
+    for test in vec!["test1", "test2", "test3"]
+    {
         println!("compiling: {}", test);
         test_input_to_souffle(&String::from(test));
     }
-    // test_input_to_souffle(&String::from("test2"));
-    // test_cons_ast(&String::from("test_inputs/input_file"));
-    // test_emit_souffle(&String::from("test_inputs/input_file"));
-    // test_cons_ast(&String::from("test_inputs/test2"));
-    // test_emit_souffle(&String::from("test_inputs/test2"));
-    // test_cons_ast(&String::from("test_inputs/test3"));
-    // test_emit_souffle(&String::from("test_inputs/test3"));
 }
