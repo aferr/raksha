@@ -17,7 +17,7 @@
 // This is adapted from:
 // https://github.com/rrevenantt/antlr4rust/blob/master/build.rs
 
-use std::{env, error::Error, process::Command};
+use std::{env, fs, error::Error, process::Command};
 
 fn run_antlr_on(grammar_file: &str, antlr_path: &str) -> Result<(), Box<dyn Error>> {
     let parsing_subdir = env::current_dir().unwrap().join("src/parsing");
@@ -28,13 +28,19 @@ fn run_antlr_on(grammar_file: &str, antlr_path: &str) -> Result<(), Box<dyn Erro
     // 'cargo build -vv &> output file'
     // because cargo omits errors generated from executed commands otherwise
 
+    // This is the path where antlr code will be generated.
+    let antlr_gen_dir = "../../target/antlr_gen/";
+
+    // Make the antlr generation directory if it is missing.a
+    fs::create_dir_all("target/antlr_gen")?;
+
     Command::new("java")
         .current_dir(parsing_subdir)
         .arg("-jar")
         .arg(antlr_path)
         .arg("-Dlanguage=Rust")
         .arg("-o")
-        .arg("antlr_gen")
+        .arg(antlr_gen_dir)
         .arg(&full_file)
         .spawn()
         .expect("antlr4rust jar failed to start")

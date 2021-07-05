@@ -14,6 +14,22 @@
  * limitations under the License.
  */
 
-pub mod authlogiclexer;
-pub mod authlogiclistener;
-pub mod authlogicparser;
+pub mod antlr_gen {
+
+    // This macro exists as a way to make use of 
+    // aesthetically pleasing concatenation without making
+    // temporary variables or giving up code reuse.
+    macro_rules! prefix { () => {"../../../target/antlr_gen/"} }
+
+    pub mod authlogiclexer {
+        include!(concat!(prefix!(), "authlogiclexer.rs"));
+    }
+
+    pub mod authlogiclistener {
+        include!(concat!(prefix!(), "authlogiclistener.rs"));
+    }
+
+    pub mod authlogicparser {
+        include!(concat!(prefix!(), "authlogicparser.rs"));
+    }
+}
